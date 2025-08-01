@@ -1,0 +1,15 @@
+const API_BASE = "http://localhost:3000/api";
+
+// Get all faculty
+export async function getAllFaculty() {
+  const res = await fetch(`${API_BASE}/faculty`);
+  if (!res.ok) throw new Error("Failed to fetch faculty");
+  return res.json();
+}
+
+// Get one faculty member by ID
+export async function getFacultyById(id) {
+  const res = await fetch(`${API_BASE}/faculty/${id}`);
+  if (!res.ok) throw new Error("Failed to fetch faculty member");
+  return res.json();
+}
