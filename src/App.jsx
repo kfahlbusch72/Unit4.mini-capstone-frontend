@@ -12,6 +12,7 @@ function App() {
         <Route path="/faculty" element={<FacultyPage />} />
         <Route path="/faculty/:id" element={<FacultyDetailPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/faculty/new" element={<FacultyFormPage />} />
       </Routes>
     </>
   );

@@ -1,3 +1,19 @@
+import AdminAuthForm from "../components/AdminAuthForm";
+import { useAuth } from "../context/AuthContext";
+
 export default function LoginPage() {
-  return <h2>Login or Register</h2>;
+  const { token, logout } = useAuth();
+
+  return (
+    <div>
+      {token ? (
+        <>
+          <h2>You are logged in!</h2>
+          <button onClick={logout}>Log out</button>
+        </>
+      ) : (
+        <AdminAuthForm />
+      )}
+    </div>
+  );
 }
