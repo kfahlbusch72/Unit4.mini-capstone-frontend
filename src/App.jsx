@@ -1,3 +1,9 @@
+import { Routes, Route } from "react-router-dom";
+import FacultyPage from "./pages/FacultyPage";
+import FacultyDetailPage from "./pages/FacultyDetailPage";
+import LoginPage from "./pages/LoginPage";
+import FacultyFormPage from "./pages/FacultyFormPage";
+
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from "react-router-dom";
 import DepartmentsPage from "./pages/DepartmentsPage";
 import DepartmentDetailsPage from "./pages/DepartmentDetailsPage";
@@ -22,6 +28,15 @@ function App() {
         <Route path="/departments/:id/edit" element={<EditDepartmentPage />} />
       </Routes>
     </Router>
+    <>
+      <h1>Welcome to FSU</h1>
+      <Routes>
+        <Route path="/faculty" element={<FacultyPage />} />
+        <Route path="/faculty/:id" element={<FacultyDetailPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/faculty/new" element={<FacultyFormPage />} />
+      </Routes>
+    </>
   );
 }
 
