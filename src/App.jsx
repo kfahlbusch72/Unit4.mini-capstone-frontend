@@ -2,6 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import FacultyPage from "./pages/FacultyPage";
 import FacultyDetailPage from "./pages/FacultyDetailPage";
 import LoginPage from "./pages/LoginPage";
+import FacultyFormPage from "./pages/FacultyFormPage";
+
 import "./App.css";
 
 function App() {
