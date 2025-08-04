@@ -39,7 +39,6 @@ export default function FacultyForm({ initialData = {}, onSubmit }) {
         placeholder="Email (optional)"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        required
       />
 
       <textarea
