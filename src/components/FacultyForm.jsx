@@ -50,7 +50,7 @@ export default function FacultyForm({ initialData = {}, onSubmit }) {
 
       <input
         type="text"
-        placeholder="Image URL"
+        placeholder="Image URL (optional)"
         value={imageUrl}
         onChange={(e) => setImageUrl(e.target.value)}
       />

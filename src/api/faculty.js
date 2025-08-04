@@ -29,3 +29,11 @@ export async function createFaculty(faculty) {
 
   return res.json();
 }
+
+export async function deleteFaculty(id) {
+  const res = await fetch(`http://localhost:3000/api/faculty/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) throw new Error("Failed to delete faculty");
+}
