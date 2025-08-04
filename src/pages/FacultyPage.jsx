@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import FacultyCard from "../components/FacultyCard";
 import { getAllFaculty } from "../api/faculty";
+import FacultyList from "../components/FacultyList";
 
 export default function FacultyPage() {
   const [facultyList, setFacultyList] = useState([]);
@@ -9,7 +9,7 @@ export default function FacultyPage() {
   useEffect(() => {
     async function loadFaculty() {
       try {
-        const data = await getAllFaculty(); // 🔌 call backend
+        const data = await getAllFaculty();
         setFacultyList(data);
       } catch (err) {
         setError(err.message || "Failed to load faculty");
@@ -19,16 +19,12 @@ export default function FacultyPage() {
     loadFaculty();
   }, []);
 
-  if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div>
       <h2>Our Faculty</h2>
-      <div className="faculty-list">
-        {facultyList.map((prof) => (
-          <FacultyCard key={prof.id} faculty={prof} />
-        ))}
-      </div>
+      <FacultyList faculty={facultyList} />
     </div>
   );
 }
