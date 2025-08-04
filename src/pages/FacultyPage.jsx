@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import FacultyCard from "../components/FacultyCard";
+import { getAllFaculty } from "../api/faculty";
+
 export default function FacultyPage() {
   const [facultyList, setFacultyList] = useState([]);
   const [error, setError] = useState("");
