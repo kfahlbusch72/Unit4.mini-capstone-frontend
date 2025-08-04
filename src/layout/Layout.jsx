@@ -5,7 +5,7 @@ export default function Layout() {
     <>
       <nav style={{ padding: "1rem", backgroundColor: "#222" }}>
         <NavLink
-          to="/"
+          to="/home"
           className={({ isActive }) =>
             isActive ? "nav-link active" : "nav-link"
           }

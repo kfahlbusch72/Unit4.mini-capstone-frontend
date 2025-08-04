@@ -14,7 +14,8 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/departments" element={<DepartmentsPage />} />
         <Route path="/departments/new" element={<NewDepartmentPage />} />
         <Route path="/departments/:id" element={<DepartmentDetailsPage />} />

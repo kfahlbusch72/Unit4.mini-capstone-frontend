@@ -4,7 +4,11 @@ export default function FacultyDetail({ faculty }) {
   return (
     <div className="faculty-detail">
       <h2>{faculty.name}</h2>
-      <img src={faculty.imageUrl} alt={faculty.name} width={150} />
+      <img
+        src={faculty.imageUrl}
+        alt={`Portrait of ${faculty.name}`}
+        width={150}
+      />
       <p>
         <strong>Email:</strong> {faculty.email}
       </p>
