@@ -36,7 +36,7 @@ export default function FacultyForm({ initialData = {}, onSubmit }) {
 
       <input
         type="email"
-        placeholder="Email"
+        placeholder="Email (optional)"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
