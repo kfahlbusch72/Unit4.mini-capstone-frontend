@@ -13,3 +13,19 @@ export async function getFacultyById(id) {
   if (!res.ok) throw new Error("Failed to fetch faculty member");
   return res.json();
 }
+
+// Create a new faculty member
+export async function createFaculty(faculty) {
+  const res = await fetch(`${API_BASE}/faculty`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(faculty),
+  });
+
+  if (!res.ok) {
+    const message = await res.text();
+    throw new Error(message || "Failed to create faculty");
+  }
+
+  return res.json();
+}
