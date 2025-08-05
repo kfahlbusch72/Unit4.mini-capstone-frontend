@@ -18,7 +18,7 @@ export default function FacultyCard({ faculty }) {
         />
       )}
       <h3>{faculty.name}</h3>
-      <p>{faculty.department?.name || "No department assigned"}</p>
+      {/* <p>{faculty.department?.name || "No department assigned"}</p> */}
       <Link to={`/faculty/${faculty.id}`}>View Profile</Link>
     </div>
   );
