@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { deleteFaculty, changeFacultyDepartment } from "../api/faculty";
-import { getDepartments } from "../api/departments";
+import { getAllDepartments } from "../api/departments";
 import { useAuth } from "../context/AuthContext";
 
 export default function FacultyDetail({ faculty }) {
@@ -16,7 +16,7 @@ export default function FacultyDetail({ faculty }) {
   useEffect(() => {
     async function loadDepartments() {
       try {
-        const data = await getDepartments();
+        const data = await getAllDepartments();
         setDepartments(data);
       } catch (err) {
         console.error("Failed to load departments", err);
