@@ -62,9 +62,12 @@ export default function FacultyDetail({ faculty }) {
   return (
     <div className="faculty-detail">
       <h2>{faculty.name}</h2>
-
-      {faculty.bioImage && (
-        <img src={faculty.bioImage} alt={faculty.name} width={200} />
+      {faculty.image_url && (
+        <img
+          src={faculty.image_url}
+          alt={`Portrait of ${faculty.name}`}
+          width={150}
+        />
       )}
 
       <p>
