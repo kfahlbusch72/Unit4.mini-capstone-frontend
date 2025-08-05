@@ -67,15 +67,19 @@ export async function removeFacultyFromDepartment(id, token) {
 }
 
 export async function changeFacultyDepartment(facultyId, deptId, token) {
-  const res = await fetch(`/api/faculty/${facultyId}/department`, {
+  const res = await fetch(`${API_BASE}/faculty/${facultyId}/department`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ deptId }),
+    body: JSON.stringify({ departmentId: Number(deptId) }),
   });
 
-  if (!res.ok) throw new Error("Failed to change department");
+  if (!res.ok) {
+    const msg = await res.text();
+    throw new Error(msg || "Failed to change department");
+  }
+
   return res.json();
 }
