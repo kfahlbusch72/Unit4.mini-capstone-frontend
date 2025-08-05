@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { deleteFaculty } from "../api/faculty";
-import { useAuth } from "../auth/AuthContext"; // ✅
+import { useAuth } from "../context/AuthContext"; // ✅
 
 export default function FacultyDetail({ faculty }) {
   const navigate = useNavigate();
