@@ -25,6 +25,6 @@ export async function login(username, password) {
     body: JSON.stringify({ username, password }),
   });
 
-  if (!res.ok) throw new Error("Invalid email or password");
+  if (!res.ok) throw new Error("Invalid username or password");
   return res.json(); // should include token
 }

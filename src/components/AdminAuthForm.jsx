@@ -38,8 +38,8 @@ export default function AdminAuthForm() {
       <input
         type="username"
         placeholder="username"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
         required
       />
 
