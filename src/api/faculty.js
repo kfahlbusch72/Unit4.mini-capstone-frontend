@@ -47,3 +47,21 @@ export async function deleteFaculty(id, token) {
     throw new Error(message || "Failed to delete faculty");
   }
 }
+
+export async function removeFacultyFromDepartment(id, token) {
+  const res = await fetch(`${API_BASE}/faculty/${id}`, {
+    method: "PATCH", // or PUT if backend expects that
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ departmentId: null }),
+  });
+
+  if (!res.ok) {
+    const message = await res.text();
+    throw new Error(message || "Failed to unassign faculty");
+  }
+
+  return res.json();
+}
