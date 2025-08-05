@@ -10,7 +10,7 @@ export default function FacultyDetail({ faculty }) {
 
   const [departments, setDepartments] = useState([]);
   const [selectedDept, setSelectedDept] = useState(
-    faculty.department?.id || ""
+    faculty?.department?.id ?? ""
   );
 
   useEffect(() => {
@@ -41,14 +41,19 @@ export default function FacultyDetail({ faculty }) {
   }
 
   async function handleUpdateDepartment() {
+    if (!selectedDept) {
+      alert("Please select a department.");
+      return;
+    }
+
     try {
+      console.log("Changing to department ID:", selectedDept);
       await changeFacultyDepartment(faculty.id, selectedDept, token);
       alert("Department updated!");
-      // Reload page or navigate to force refresh
-      navigate(0);
+      navigate(0); // Refresh page
     } catch (err) {
-      alert("Failed to update department.");
       console.error(err);
+      alert("Failed to update department.");
     }
   }
 
@@ -83,7 +88,10 @@ export default function FacultyDetail({ faculty }) {
           <select
             id="department-select"
             value={selectedDept}
-            onChange={(e) => setSelectedDept(Number(e.target.value))}
+            onChange={(e) => {
+              const value = e.target.value;
+              setSelectedDept(value === "" ? "" : Number(value)); // ✅ FIX 2: always convert to number unless empty
+            }}
           >
             <option value="">-- Select Department --</option>
             {departments.map((dept) => (
