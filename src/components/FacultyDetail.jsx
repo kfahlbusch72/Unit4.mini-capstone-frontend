@@ -1,3 +1,4 @@
+// src/components/FacultyDetail.jsx
 import { Link, useNavigate } from "react-router-dom";
 import { deleteFaculty } from "../api/faculty";
 import { useAuth } from "../context/AuthContext";
@@ -32,14 +33,14 @@ export default function FacultyDetail({ faculty }) {
           width={150}
         />
       )}
+
       <p>
-        <strong>Email:</strong> {faculty.email || "N/A"}
+        <strong>Department:</strong>{" "}
+        {faculty.department?.name || "Not assigned"}
       </p>
+
       <p>
-        <strong>Department:</strong> {faculty.department?.name || "N/A"}
-      </p>
-      <p>
-        <strong>Bio:</strong> {faculty.bio || "N/A"}
+        <strong>Bio:</strong> {faculty.bioDescription || "N/A"}
       </p>
 
       <div style={{ marginTop: "1rem" }}>
@@ -47,7 +48,7 @@ export default function FacultyDetail({ faculty }) {
           <button>← Back to Faculty</button>
         </Link>
 
-        {token && ( // ✅ only show if logged in
+        {token && (
           <button
             style={{
               marginLeft: "1rem",
