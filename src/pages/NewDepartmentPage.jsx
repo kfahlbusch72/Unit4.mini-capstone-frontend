@@ -1,3 +1,4 @@
+// src/pages/NewDepartmentPage.jsx
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +10,9 @@ export default function NewDepartmentPage() {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [contactInfo, setContactInfo] = useState("");
-  const [bannerImg, setBannerImg] = useState("");
+  const [images, setImages] = useState(""); // replaces bannerImg
+  const [phone, setPhone] = useState(""); // replaces contactInfo
+  const [email, setEmail] = useState(""); // new
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +20,9 @@ export default function NewDepartmentPage() {
     const newDepartment = {
       name,
       description,
-      contactInfo,
-      bannerImg,
+      images,
+      phone,
+      email,
     };
 
     try {
@@ -54,20 +57,30 @@ export default function NewDepartmentPage() {
           />
         </div>
         <div>
-          <label>Contact Info:</label>
+          <label>Banner Image URL:</label>
           <br />
           <input
-            value={contactInfo}
-            onChange={(e) => setContactInfo(e.target.value)}
+            value={images}
+            onChange={(e) => setImages(e.target.value)}
             required
           />
         </div>
         <div>
-          <label>Banner Image URL:</label>
+          <label>Contact Phone:</label>
           <br />
           <input
-            value={bannerImg}
-            onChange={(e) => setBannerImg(e.target.value)}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Contact Email:</label>
+          <br />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
