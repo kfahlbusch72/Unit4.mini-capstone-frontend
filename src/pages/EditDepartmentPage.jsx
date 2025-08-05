@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getDepartmentById, updateDepartment } from "../api/departments";
-import { useAuth } from "../context/AuthContext"; // ✅ Added
+import { useAuth } from "../context/AuthContext";
 
 export default function EditDepartmentPage() {
   const { id } = useParams();
-  const { token } = useAuth(); // ✅ Get token from context
+  const { token } = useAuth();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -13,19 +13,22 @@ export default function EditDepartmentPage() {
   const [phone, setPhone] = useState("");
   const [images, setImages] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadDepartment() {
       try {
         const data = await getDepartmentById(id);
-        setName(data.name);
-        setDescription(data.description);
-        setEmail(data.email);
-        setPhone(data.phone);
-        setImages(data.images);
+        setName(data.name || "");
+        setDescription(data.description || "");
+        setEmail(data.email || "");
+        setPhone(data.phone || "");
+        setImages(data.images || "");
+        setLoading(false);
       } catch (err) {
         console.error(err);
         setError("Failed to load department.");
+        setLoading(false);
       }
     }
 
@@ -43,7 +46,7 @@ export default function EditDepartmentPage() {
         images,
       };
 
-      await updateDepartment(id, updatedDepartment, token); // ✅ Token added
+      await updateDepartment(id, updatedDepartment, token);
       alert("Department updated!");
     } catch (err) {
       console.error(err);
@@ -51,6 +54,7 @@ export default function EditDepartmentPage() {
     }
   };
 
+  if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
@@ -61,7 +65,7 @@ export default function EditDepartmentPage() {
           <label>Name:</label>
           <br />
           <input
-            value={name}
+            value={name ?? ""}
             onChange={(e) => setName(e.target.value)}
             required
           />
@@ -70,7 +74,7 @@ export default function EditDepartmentPage() {
           <label>Description:</label>
           <br />
           <textarea
-            value={description}
+            value={description ?? ""}
             onChange={(e) => setDescription(e.target.value)}
             required
           />
@@ -79,7 +83,7 @@ export default function EditDepartmentPage() {
           <label>Email:</label>
           <br />
           <input
-            value={email}
+            value={email ?? ""}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -88,7 +92,7 @@ export default function EditDepartmentPage() {
           <label>Phone:</label>
           <br />
           <input
-            value={phone}
+            value={phone ?? ""}
             onChange={(e) => setPhone(e.target.value)}
             required
           />
@@ -97,7 +101,7 @@ export default function EditDepartmentPage() {
           <label>Banner Image URL:</label>
           <br />
           <input
-            value={images}
+            value={images ?? ""}
             onChange={(e) => setImages(e.target.value)}
             required
           />
