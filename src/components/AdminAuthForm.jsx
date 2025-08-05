@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function AdminAuthForm() {
   const { login } = useAuth();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [mode, setMode] = useState("login");
   const [error, setError] = useState("");
@@ -19,9 +19,9 @@ export default function AdminAuthForm() {
       let data;
 
       if (mode === "login") {
-        data = await loginUser(email, password); // ✅ real API call
+        data = await loginUser(username, password); // ✅ real API call
       } else {
-        data = await registerUser(email, password); // ✅ real API call
+        data = await registerUser(username, password); // ✅ real API call
       }
 
       login(data.token); // ✅ store real token
@@ -36,8 +36,8 @@ export default function AdminAuthForm() {
       <h2>{mode === "login" ? "Login" : "Register"}</h2>
 
       <input
-        type="email"
-        placeholder="Email"
+        type="username"
+        placeholder="username"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
