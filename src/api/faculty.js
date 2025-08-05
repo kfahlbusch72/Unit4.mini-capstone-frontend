@@ -15,10 +15,13 @@ export async function getFacultyById(id) {
 }
 
 // Create a new faculty member
-export async function createFaculty(faculty) {
+export async function createFaculty(faculty, token) {
   const res = await fetch(`${API_BASE}/faculty`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`, // ✅ add token header
+    },
     body: JSON.stringify(faculty),
   });
 
@@ -30,9 +33,12 @@ export async function createFaculty(faculty) {
   return res.json();
 }
 
-export async function deleteFaculty(id) {
+export async function deleteFaculty(id, token) {
   const res = await fetch(`http://localhost:3000/api/faculty/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!res.ok) throw new Error("Failed to delete faculty");
