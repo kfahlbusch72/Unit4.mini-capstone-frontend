@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { deleteFaculty } from "../api/faculty";
-import { useAuth } from "../context/AuthContext"; // ✅
+import { useAuth } from "../context/AuthContext";
 
 export default function FacultyDetail({ faculty }) {
   const navigate = useNavigate();
-  const { token } = useAuth(); // ✅
+  const { token } = useAuth();
 
   if (!faculty) return <p>Loading...</p>;
 
@@ -15,7 +15,7 @@ export default function FacultyDetail({ faculty }) {
     if (!confirmDelete) return;
 
     try {
-      await deleteFaculty(faculty.id, token); // ✅
+      await deleteFaculty(faculty.id, token);
       navigate("/faculty");
     } catch (err) {
       alert("Failed to delete faculty.");
@@ -42,15 +42,18 @@ export default function FacultyDetail({ faculty }) {
         <Link to="/faculty">
           <button>← Back to Faculty</button>
         </Link>
-        <button
-          style={{
-            marginLeft: "1rem",
-            backgroundColor: "var(--xm-energy-red)",
-          }}
-          onClick={handleDelete}
-        >
-          Delete
-        </button>
+
+        {token && ( // ✅ only show if logged in
+          <button
+            style={{
+              marginLeft: "1rem",
+              backgroundColor: "var(--xm-energy-red)",
+            }}
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );

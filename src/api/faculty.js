@@ -34,6 +34,7 @@ export async function createFaculty(faculty, token) {
 }
 
 export async function deleteFaculty(id, token) {
+  console.log("sending token:", token);
   const res = await fetch(`${API_BASE}/faculty/${id}`, {
     method: "DELETE",
     headers: {
