@@ -48,7 +48,8 @@ export default function DepartmentDetailsPage() {
 
   async function handleRemoveFaculty(facultyId) {
     try {
-      await removeFacultyFromDepartment(facultyId, token);
+      // ✅ FIXED: Added departmentId as first argument
+      await removeFacultyFromDepartment(id, facultyId, token);
       alert("Faculty removed.");
       const updated = await getDepartmentById(id);
       setDepartment(updated);

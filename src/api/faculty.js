@@ -48,19 +48,24 @@ export async function deleteFaculty(id, token) {
   }
 }
 
-export async function removeFacultyFromDepartment(id, token) {
-  const res = await fetch(`${API_BASE}/faculty/${id}`, {
-    method: "PATCH", // or PUT if backend expects that
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ departmentId: null }),
-  });
+export async function removeFacultyFromDepartment(
+  departmentId,
+  facultyId,
+  token
+) {
+  const res = await fetch(
+    `${API_BASE}/departments/${departmentId}/faculty/${facultyId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (!res.ok) {
     const message = await res.text();
-    throw new Error(message || "Failed to unassign faculty");
+    throw new Error(message || "Failed to remove faculty from department");
   }
 
   return res.json();
