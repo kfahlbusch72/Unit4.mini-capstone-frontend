@@ -47,7 +47,6 @@ export default function FacultyDetail({ faculty }) {
     }
 
     try {
-      console.log("Changing to department ID:", selectedDept);
       await changeFacultyDepartment(faculty.id, selectedDept, token);
       alert("Department updated!");
       navigate(0); // Refresh page
@@ -62,11 +61,18 @@ export default function FacultyDetail({ faculty }) {
   return (
     <div className="faculty-detail">
       <h2>{faculty.name}</h2>
-      {faculty.image_url && (
+
+      {faculty.bioImage && (
         <img
-          src={faculty.image_url}
+          src={faculty.bioImage}
           alt={`Portrait of ${faculty.name}`}
           width={150}
+          style={{
+            objectFit: "cover",
+            height: "150px",
+            borderRadius: "8px",
+            marginBottom: "1rem",
+          }}
         />
       )}
 
@@ -90,7 +96,7 @@ export default function FacultyDetail({ faculty }) {
             value={selectedDept}
             onChange={(e) => {
               const value = e.target.value;
-              setSelectedDept(value === "" ? "" : Number(value)); // ✅ FIX 2: always convert to number unless empty
+              setSelectedDept(value === "" ? "" : Number(value));
             }}
           >
             <option value="">-- Select Department --</option>
