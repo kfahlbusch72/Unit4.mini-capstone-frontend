@@ -1,61 +1,106 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-// import { fetchDepartmentById, updateDepartment } from "../api/departments"; // Uncomment when backend is ready
+import { getDepartmentById, updateDepartment } from "../api/departments";
+import { useAuth } from "../context/AuthContext"; // ✅ Added
 
 export default function EditDepartmentPage() {
   const { id } = useParams();
+  const { token } = useAuth(); // ✅ Get token from context
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [contactInfo, setContactInfo] = useState("");
-  const [bannerImg, setBannerImg] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [images, setImages] = useState("");
+  const [error, setError] = useState("");
 
-  // For now, we’ll simulate fetching existing department data:
   useEffect(() => {
-    // Simulate API fetch by ID
-    const dummyDepartment = {
-      id,
-      name: "Mutant Training",
-      description: "A rigorous program designed to help mutants master their abilities.",
-      contactInfo: "professorx@xavierschool.edu",
-      bannerImg: "https://via.placeholder.com/600x200?text=Mutant+Training",
-    };
+    async function loadDepartment() {
+      try {
+        const data = await getDepartmentById(id);
+        setName(data.name);
+        setDescription(data.description);
+        setEmail(data.email);
+        setPhone(data.phone);
+        setImages(data.images);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load department.");
+      }
+    }
 
-    setName(dummyDepartment.name);
-    setDescription(dummyDepartment.description);
-    setContactInfo(dummyDepartment.contactInfo);
-    setBannerImg(dummyDepartment.bannerImg);
+    loadDepartment();
   }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedDepartment = { name, description, contactInfo, bannerImg };
+    try {
+      const updatedDepartment = {
+        name,
+        description,
+        email,
+        phone,
+        images,
+      };
 
-    console.log("Updated Department:", updatedDepartment);
-
-    // Uncomment when backend is ready:
-    // await updateDepartment(id, updatedDepartment);
+      await updateDepartment(id, updatedDepartment, token); // ✅ Token added
+      alert("Department updated!");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to update department.");
+    }
   };
+
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div>
       <h1>Edit Department</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name:</label><br />
-          <input value={name} onChange={(e) => setName(e.target.value)} required />
+          <label>Name:</label>
+          <br />
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
         </div>
         <div>
-          <label>Description:</label><br />
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+          <label>Description:</label>
+          <br />
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
         </div>
         <div>
-          <label>Contact Info:</label><br />
-          <input value={contactInfo} onChange={(e) => setContactInfo(e.target.value)} required />
+          <label>Email:</label>
+          <br />
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
         </div>
         <div>
-          <label>Banner Image URL:</label><br />
-          <input value={bannerImg} onChange={(e) => setBannerImg(e.target.value)} required />
+          <label>Phone:</label>
+          <br />
+          <input
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Banner Image URL:</label>
+          <br />
+          <input
+            value={images}
+            onChange={(e) => setImages(e.target.value)}
+            required
+          />
         </div>
         <button type="submit">Save Changes</button>
       </form>
