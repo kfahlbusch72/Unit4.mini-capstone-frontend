@@ -29,3 +29,18 @@ export async function createDepartment(data, token) {
   if (!res.ok) throw new Error("Failed to create department");
   return res.json();
 }
+
+// Delete a department by ID
+export async function deleteDepartment(id, token) {
+  const res = await fetch(`${API_BASE}/departments/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    const message = await res.text();
+    throw new Error(message || "Failed to delete department");
+  }
+}

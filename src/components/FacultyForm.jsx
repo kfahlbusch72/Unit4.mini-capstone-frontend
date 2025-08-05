@@ -1,12 +1,11 @@
-// src/components/FacultyForm.jsx
 import { useState } from "react";
 
-export default function FacultyForm({ initialData = {}, onSubmit }) {
+export default function FacultyForm({ initialData = {}, departments = [], onSubmit }) {
   const [name, setName] = useState(initialData.name || "");
   const [email, setEmail] = useState(initialData.email || "");
   const [bio, setBio] = useState(initialData.bio || "");
   const [imageUrl, setImageUrl] = useState(initialData.imageUrl || "");
-  const [department, setDepartment] = useState(initialData.department || "");
+  const [departmentId, setDepartmentId] = useState(initialData.departmentId || "");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -16,7 +15,7 @@ export default function FacultyForm({ initialData = {}, onSubmit }) {
       email,
       bio,
       imageUrl,
-      department,
+      departmentId: departmentId || null,
     };
 
     onSubmit(newFaculty);
@@ -55,12 +54,15 @@ export default function FacultyForm({ initialData = {}, onSubmit }) {
         onChange={(e) => setImageUrl(e.target.value)}
       />
 
-      <input
-        type="text"
-        placeholder="Department"
-        value={department}
-        onChange={(e) => setDepartment(e.target.value)}
-      />
+      <label>Department:</label>
+      <select value={departmentId} onChange={(e) => setDepartmentId(e.target.value)}>
+        <option value="">-- None --</option>
+        {departments.map((dept) => (
+          <option key={dept.id} value={dept.id}>
+            {dept.name}
+          </option>
+        ))}
+      </select>
 
       <button type="submit">{initialData.id ? "Update" : "Create"}</button>
     </form>
