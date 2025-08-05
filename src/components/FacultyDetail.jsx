@@ -57,6 +57,7 @@ export default function FacultyDetail({ faculty }) {
   }
 
   if (!faculty) return <p>Loading...</p>;
+  console.log("Faculty detail:", faculty);
 
   return (
     <div className="faculty-detail">
