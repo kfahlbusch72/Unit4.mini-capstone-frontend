@@ -44,3 +44,22 @@ export async function deleteDepartment(id, token) {
     throw new Error(message || "Failed to delete department");
   }
 }
+
+// Update a department by ID
+export async function updateDepartment(id, data, token) {
+  const res = await fetch(`${API_BASE}/departments/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const message = await res.text();
+    throw new Error(message || "Failed to update department");
+  }
+
+  return res.json();
+}
