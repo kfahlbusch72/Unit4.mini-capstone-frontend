@@ -1,20 +1,26 @@
 import { useState } from "react";
 
-export default function FacultyForm({ initialData = {}, departments = [], onSubmit }) {
+export default function FacultyForm({
+  initialData = {},
+  departments = [],
+  onSubmit,
+}) {
   const [name, setName] = useState(initialData.name || "");
-  const [email, setEmail] = useState(initialData.email || "");
-  const [bio, setBio] = useState(initialData.bio || "");
-  const [imageUrl, setImageUrl] = useState(initialData.imageUrl || "");
-  const [departmentId, setDepartmentId] = useState(initialData.departmentId || "");
+  const [bioDescription, setBioDescription] = useState(
+    initialData.bioDescription || ""
+  );
+  const [bioImage, setBioImage] = useState(initialData.bioImage || "");
+  const [departmentId, setDepartmentId] = useState(
+    initialData.departmentId || ""
+  );
 
   function handleSubmit(e) {
     e.preventDefault();
 
     const newFaculty = {
       name,
-      email,
-      bio,
-      imageUrl,
+      bioDescription,
+      bioImage,
       departmentId: departmentId || null,
     };
 
@@ -33,30 +39,29 @@ export default function FacultyForm({ initialData = {}, departments = [], onSubm
         required
       />
 
-      <input
-        type="email"
-        placeholder="Email (optional)"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-
       <textarea
         placeholder="Short bio"
-        value={bio}
-        onChange={(e) => setBio(e.target.value)}
+        value={bioDescription}
+        onChange={(e) => setBioDescription(e.target.value)}
         rows={4}
+        required
       />
 
       <input
         type="text"
-        placeholder="Image URL (optional)"
-        value={imageUrl}
-        onChange={(e) => setImageUrl(e.target.value)}
+        placeholder="Image URL"
+        value={bioImage}
+        onChange={(e) => setBioImage(e.target.value)}
+        required
       />
 
       <label>Department:</label>
-      <select value={departmentId} onChange={(e) => setDepartmentId(e.target.value)}>
-        <option value="">-- None --</option>
+      <select
+        value={departmentId}
+        onChange={(e) => setDepartmentId(e.target.value)}
+        required
+      >
+        <option value="">-- Select Department --</option>
         {departments.map((dept) => (
           <option key={dept.id} value={dept.id}>
             {dept.name}
