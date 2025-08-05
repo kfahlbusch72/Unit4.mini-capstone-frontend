@@ -33,13 +33,17 @@ export async function createFaculty(faculty, token) {
   return res.json();
 }
 
-export async function deleteFaculty(id, token) {
-  const res = await fetch(`http://localhost:3000/api/faculty/${id}`, {
+export async function deleteFaculty(id, token, token) {
+  console.log("sending token:", token);
+  const res = await fetch(`${API_BASE}/faculty/${id}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  if (!res.ok) throw new Error("Failed to delete faculty");
+  if (!res.ok) {
+    const message = await res.text();
+    throw new Error(message || "Failed to delete faculty");
+  }
 }

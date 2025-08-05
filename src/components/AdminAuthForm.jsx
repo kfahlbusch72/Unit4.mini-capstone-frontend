@@ -1,23 +1,33 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { login as loginUser, register as registerUser } from "../api/auth"; // ✅
+import { useNavigate } from "react-router-dom";
 
 export default function AdminAuthForm() {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [mode, setMode] = useState("login"); // or "register"
+  const [mode, setMode] = useState("login");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
 
     try {
-      // Replace with real fetch later
-      const fakeToken = "1234.jwt.token";
-      login(fakeToken); // update context
+      let data;
+
+      if (mode === "login") {
+        data = await loginUser(email, password); // ✅ real API call
+      } else {
+        data = await registerUser(email, password); // ✅ real API call
+      }
+
+      login(data.token); // ✅ store real token
+      navigate("/"); // ✅ redirect to homepage (optional)
     } catch (err) {
-      setError("Something went wrong");
+      setError(err.message || "Something went wrong");
     }
   }
 
