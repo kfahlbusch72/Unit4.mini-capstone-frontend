@@ -15,10 +15,13 @@ export async function getFacultyById(id) {
 }
 
 // Create a new faculty member
-export async function createFaculty(faculty) {
+export async function createFaculty(faculty, token) {
   const res = await fetch(`${API_BASE}/faculty`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`, // ✅ add token header
+    },
     body: JSON.stringify(faculty),
   });
 
