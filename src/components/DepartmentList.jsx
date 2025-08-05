@@ -1,6 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import { deleteDepartment } from "../api/departments";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function DepartmentList({ departments, onDelete }) {
   const { token } = useAuth();
@@ -22,7 +22,12 @@ export default function DepartmentList({ departments, onDelete }) {
       <ul>
         {departments.map((dept) => (
           <li key={dept.id}>
-            {dept.name}
+            <h3>{dept.name}</h3>
+            <img src={dept.images} alt={dept.name} width="400" />
+            <p>{dept.description}</p>
+            <p>Email: {dept.email}</p>
+            <p>Phone: {dept.phone}</p>
+            <Link to={`/departments/${dept.id}`}>View Details</Link>
             {token && (
               <>
                 {" "}

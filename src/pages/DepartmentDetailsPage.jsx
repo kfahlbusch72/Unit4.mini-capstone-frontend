@@ -26,9 +26,10 @@ export default function DepartmentDetailsPage() {
   return (
     <div>
       <h1>{department.name}</h1>
-      <img src={department.bannerImg} alt={department.name} width="600" />
+      <img src={department.images} alt={department.name} width="600" />
       <p>{department.description}</p>
-      <p>Contact: {department.contactInfo}</p>
+      <p>Email: {department.email}</p>
+      <p>Phone: {department.phone}</p>
 
       <h3>Faculty</h3>
       <ul>
