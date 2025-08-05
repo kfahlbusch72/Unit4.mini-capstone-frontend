@@ -33,7 +33,7 @@ export async function createFaculty(faculty, token) {
   return res.json();
 }
 
-export async function deleteFaculty(id, token, token) {
+export async function deleteFaculty(id, token) {
   console.log("sending token:", token);
   const res = await fetch(`${API_BASE}/faculty/${id}`, {
     method: "DELETE",
