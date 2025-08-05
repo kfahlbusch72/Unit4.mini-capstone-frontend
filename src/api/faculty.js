@@ -65,3 +65,17 @@ export async function removeFacultyFromDepartment(id, token) {
 
   return res.json();
 }
+
+export async function changeFacultyDepartment(facultyId, deptId, token) {
+  const res = await fetch(`/api/faculty/${facultyId}/department`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ deptId }),
+  });
+
+  if (!res.ok) throw new Error("Failed to change department");
+  return res.json();
+}

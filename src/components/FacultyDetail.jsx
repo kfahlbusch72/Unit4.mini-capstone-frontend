@@ -1,13 +1,30 @@
-// src/components/FacultyDetail.jsx
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { deleteFaculty } from "../api/faculty";
+import { deleteFaculty, changeFacultyDepartment } from "../api/faculty";
+import { getDepartments } from "../api/departments";
 import { useAuth } from "../context/AuthContext";
 
 export default function FacultyDetail({ faculty }) {
   const navigate = useNavigate();
   const { token } = useAuth();
 
-  if (!faculty) return <p>Loading...</p>;
+  const [departments, setDepartments] = useState([]);
+  const [selectedDept, setSelectedDept] = useState(
+    faculty.department?.id || ""
+  );
+
+  useEffect(() => {
+    async function loadDepartments() {
+      try {
+        const data = await getDepartments();
+        setDepartments(data);
+      } catch (err) {
+        console.error("Failed to load departments", err);
+      }
+    }
+
+    loadDepartments();
+  }, []);
 
   async function handleDelete() {
     const confirmDelete = confirm(
@@ -22,6 +39,20 @@ export default function FacultyDetail({ faculty }) {
       alert("Failed to delete faculty.");
     }
   }
+
+  async function handleUpdateDepartment() {
+    try {
+      await changeFacultyDepartment(faculty.id, selectedDept, token);
+      alert("Department updated!");
+      // Reload page or navigate to force refresh
+      navigate(0);
+    } catch (err) {
+      alert("Failed to update department.");
+      console.error(err);
+    }
+  }
+
+  if (!faculty) return <p>Loading...</p>;
 
   return (
     <div className="faculty-detail">
@@ -43,7 +74,38 @@ export default function FacultyDetail({ faculty }) {
         <strong>Bio:</strong> {faculty.bioDescription || "N/A"}
       </p>
 
-      <div style={{ marginTop: "1rem" }}>
+      {token && (
+        <div style={{ marginTop: "1rem" }}>
+          <label htmlFor="department-select">
+            <strong>Change Department:</strong>
+          </label>
+          <br />
+          <select
+            id="department-select"
+            value={selectedDept}
+            onChange={(e) => setSelectedDept(Number(e.target.value))}
+          >
+            <option value="">-- Select Department --</option>
+            {departments.map((dept) => (
+              <option key={dept.id} value={dept.id}>
+                {dept.name}
+              </option>
+            ))}
+          </select>
+
+          <button
+            onClick={handleUpdateDepartment}
+            style={{
+              marginLeft: "1rem",
+              backgroundColor: "var(--xm-blue)",
+            }}
+          >
+            Update Department
+          </button>
+        </div>
+      )}
+
+      <div style={{ marginTop: "2rem" }}>
         <Link to="/faculty">
           <button>← Back to Faculty</button>
         </Link>
