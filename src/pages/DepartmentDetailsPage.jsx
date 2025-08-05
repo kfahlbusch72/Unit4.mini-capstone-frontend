@@ -1,25 +1,61 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getDepartmentById } from "../api/departments";
+import {
+  getAllFaculty,
+  changeFacultyDepartment,
+  removeFacultyFromDepartment,
+} from "../api/faculty";
+import { useAuth } from "../context/AuthContext";
 
 export default function DepartmentDetailsPage() {
   const { id } = useParams();
+  const { token } = useAuth();
+
   const [department, setDepartment] = useState(null);
   const [error, setError] = useState("");
+  const [allFaculty, setAllFaculty] = useState([]);
+  const [selectedFacultyId, setSelectedFacultyId] = useState("");
 
   useEffect(() => {
-    async function loadDepartment() {
+    async function loadData() {
       try {
-        const data = await getDepartmentById(id);
-        setDepartment(data);
+        const dept = await getDepartmentById(id);
+        setDepartment(dept);
+
+        const facultyList = await getAllFaculty();
+        setAllFaculty(facultyList);
       } catch (err) {
         console.error(err);
         setError("Department not found");
       }
     }
 
-    loadDepartment();
+    loadData();
   }, [id]);
+
+  async function handleAddFaculty() {
+    if (!selectedFacultyId) return;
+    try {
+      await changeFacultyDepartment(selectedFacultyId, Number(id), token);
+      alert("Faculty added to department!");
+      const updated = await getDepartmentById(id);
+      setDepartment(updated);
+    } catch (err) {
+      alert("Failed to add faculty.");
+    }
+  }
+
+  async function handleRemoveFaculty(facultyId) {
+    try {
+      await removeFacultyFromDepartment(facultyId, token);
+      alert("Faculty removed.");
+      const updated = await getDepartmentById(id);
+      setDepartment(updated);
+    } catch (err) {
+      alert("Failed to remove faculty.");
+    }
+  }
 
   if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (!department) return <p>Loading...</p>;
@@ -54,11 +90,41 @@ export default function DepartmentDetailsPage() {
                 />
               )}
               <span>{prof.name}</span>
+              {token && (
+                <button
+                  onClick={() => handleRemoveFaculty(prof.id)}
+                  style={{ marginLeft: "1rem", color: "red" }}
+                >
+                  Remove
+                </button>
+              )}
             </li>
           ))}
         </ul>
       ) : (
         <p>No faculty assigned</p>
+      )}
+
+      {token && (
+        <>
+          <h4>Add Faculty to Department</h4>
+          <select
+            value={selectedFacultyId}
+            onChange={(e) => setSelectedFacultyId(Number(e.target.value))}
+          >
+            <option value="">-- Select Faculty --</option>
+            {allFaculty
+              .filter((f) => !f.department || f.department.id !== Number(id))
+              .map((f) => (
+                <option key={f.id} value={f.id}>
+                  {f.name}
+                </option>
+              ))}
+          </select>
+          <button onClick={handleAddFaculty} style={{ marginLeft: "1rem" }}>
+            Add
+          </button>
+        </>
       )}
     </div>
   );
