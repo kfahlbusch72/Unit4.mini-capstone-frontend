@@ -48,7 +48,6 @@ export default function DepartmentDetailsPage() {
 
   async function handleRemoveFaculty(facultyId) {
     try {
-      // ✅ FIXED: Added departmentId as first argument
       await removeFacultyFromDepartment(id, facultyId, token);
       alert("Faculty removed.");
       const updated = await getDepartmentById(id);
@@ -65,8 +64,13 @@ export default function DepartmentDetailsPage() {
     <div>
       <h1>{department.name}</h1>
 
+      {/* ✅ FIXED: Prepend backend URL */}
       {department.images && (
-        <img src={department.images} alt={department.name} width="600" />
+        <img
+          src={`http://localhost:3000${department.images}`}
+          alt={department.name}
+          width="600"
+        />
       )}
 
       <p>{department.description}</p>
