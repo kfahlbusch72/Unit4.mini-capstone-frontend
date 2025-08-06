@@ -1,4 +1,3 @@
-// src/components/FacultyCard.jsx
 import { Link } from "react-router-dom";
 
 export default function FacultyCard({ faculty }) {
@@ -6,8 +5,8 @@ export default function FacultyCard({ faculty }) {
     <div className="faculty-card">
       {faculty.bioImage && (
         <img
-          src={faculty.bioImage}
-          alt={faculty.name}
+          src={`http://localhost:3000/pictures/${faculty.bioImage}`}
+          alt={`Portrait of ${faculty.name}`}
           width={100}
           style={{
             objectFit: "cover",
@@ -18,7 +17,6 @@ export default function FacultyCard({ faculty }) {
         />
       )}
       <h3>{faculty.name}</h3>
-      {/* <p>{faculty.department?.name || "No department assigned"}</p> */}
       <Link to={`/faculty/${faculty.id}`}>View Profile</Link>
     </div>
   );

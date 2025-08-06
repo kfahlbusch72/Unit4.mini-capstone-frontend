@@ -57,6 +57,8 @@ export default function FacultyDetail({ faculty }) {
   }
 
   if (!faculty) return <p>Loading...</p>;
+
+  // Show the object in dev tools
   console.log("Faculty detail:", faculty);
 
   return (
@@ -65,7 +67,7 @@ export default function FacultyDetail({ faculty }) {
 
       {faculty.bioImage && (
         <img
-          src={faculty.bioImage}
+          src={`http://localhost:3000/pictures/${faculty.bioImage}`}
           alt={`Portrait of ${faculty.name}`}
           width={150}
           style={{
