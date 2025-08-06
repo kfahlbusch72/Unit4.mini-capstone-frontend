@@ -23,14 +23,18 @@ export default function DepartmentList({ departments, onDelete }) {
         {departments.map((dept) => (
           <li key={dept.id}>
             <h3>{dept.name}</h3>
-            <img src={dept.images} alt={dept.name} width="400" />
+            {/* ✅ FIXED: Prepend backend URL */}
+            <img
+              src={`http://localhost:3000${dept.images}`}
+              alt={dept.name}
+              width="400"
+            />
             <p>{dept.description}</p>
             <p>Email: {dept.email}</p>
             <p>Phone: {dept.phone}</p>
             <Link to={`/departments/${dept.id}`}>View Details</Link>
             {token && (
               <>
-                {" "}
                 <button
                   onClick={() => navigate(`/departments/${dept.id}/edit`)}
                 >
