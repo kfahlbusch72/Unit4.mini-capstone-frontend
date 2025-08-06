@@ -67,7 +67,7 @@ export default function FacultyDetail({ faculty }) {
 
       {faculty.bioImage && (
         <img
-          src={`http://localhost:3000/pictures/${faculty.bioImage}`}
+          src={faculty.bioImage}
           alt={`Portrait of ${faculty.name}`}
           width={150}
           style={{
