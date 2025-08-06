@@ -1,3 +1,4 @@
+// src/components/FacultyCard.jsx
 import { Link } from "react-router-dom";
 
 export default function FacultyCard({ faculty }) {
@@ -5,7 +6,7 @@ export default function FacultyCard({ faculty }) {
     <div className="faculty-card">
       {faculty.bioImage && (
         <img
-          src={`http://localhost:3000/pictures/${faculty.bioImage}`}
+          src={faculty.bioImage} // ✅ USE DIRECTLY
           alt={`Portrait of ${faculty.name}`}
           width={100}
           style={{
